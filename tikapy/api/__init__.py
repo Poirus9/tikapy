@@ -69,21 +69,23 @@ class ApiRos:
         # request login
         # Mikrotik answers with a challenge in the 'ret' attribute
         # 'ret' attribute accessible as attrs['ret']
-        _, attrs = self.talk(["/login"])[0]
+        #_, attrs = self.talk(["/login"])[0]
 
         # Prepare response for challenge-response login
         # response is MD5 of 0-char + plaintext-password + challange
-        response = hashlib.md5()
-        response.update(b'\x00')
-        response.update(password.encode('UTF-8'))
-        response.update(binascii.unhexlify((attrs['ret']).encode('UTF-8')))
-        response = "00" + binascii.hexlify(response.digest()).decode('UTF-8')
+        #response = hashlib.md5()
+        #response.update(b'\x00')
+        #response.update(password.encode('UTF-8'))
+        #response.update(binascii.unhexlify((attrs['ret']).encode('UTF-8')))
+        #response = "00" + binascii.hexlify(response.digest()).decode('UTF-8')
 
         # send response & login request
+        #self.talk(["/login",
+        #           "=name=%s" % username,
+        #           "=response=%s" % response])
         self.talk(["/login",
                    "=name=%s" % username,
-                   "=response=%s" % response])
-
+                   "=password=%s" % password])
     def talk(self, words):
         """
         Communicate with the API
